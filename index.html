@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <style>
+        html,
+        body,
+        div,
+        canvas {
+            margin: 0;
+            padding: 0;
+            vertical-align: bottom;
+            cursor: default;
+            font-family: Arial;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-div"></div>
+    <script src="mathHelper.js"></script>
+    <script src="powerup.js"></script>
+    <script src="player.js"></script>
+    <script src="engine.js"></script>
+    <script src="renderer.js"></script>
+    <script>
+        var mainDiv = document.getElementById('main-div');
+        var width = 800;
+        var height = 600;
+
+        var engine = new Engine(width, height);
+        var renderer = new Renderer(mainDiv, width, height);
+
+        var lastTimestamp = 0;
+        function mainLoop(timestamp) {
+            // time elapsed in seconds
+            var delta = (timestamp - lastTimestamp) / 1000;
+            lastTimestamp = timestamp;
+            engine.update(delta);
+            renderer.render(engine, delta);
+            window.requestAnimationFrame((timestamp) => { mainLoop(timestamp); });
+        }
+
+        mainLoop(window.performance.now());
+
+        // Possible additions:
+        // Power ups: time freezing, screen clearing, edible enemy vacuuming, make all enemies edible
+        // Allow player to split size in half in order to bank an extra life.
+
+    </script>
+</body>
+
+</html>
